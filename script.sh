@@ -54,7 +54,7 @@ if [[ ! -z "$hosts_updated" ]]; then
 	fi
 
 	# Send webhook
-	curl -H "Content-Type: application/json" -d '{"username": "test", "content": "'"$message"'"}' $webhook
+	curl -H "Content-Type: application/json" -d '{"content": "'"$message"'"}' $webhook
 	# Log to console
 	echo -e "${message}"
 fi
