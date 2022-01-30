@@ -28,7 +28,7 @@ do
 	fi
 
 	# Try to update the DNS record and store the response
-	response=$(curl -s "https://dynamicdns.park-your-domain.com/update?host=$host&domain=$domain&password=$password&ip=$new_ip")
+	response=$(curl -s "https://dynamicdns.park-your-domain.com/update?host=$host&domain=$domain&password=$password&ip=$new_ip" | sed ':a;N;$!ba;s/\n/\\n/g;s/\"/\\"/g')
         
 	# Check if there's errors in the response
 	regex="<ErrCount>([0-1])<\/ErrCount>"
@@ -38,8 +38,7 @@ do
 
 		elif [[ ${BASH_REMATCH[1]} == "1" ]]; then
 			# Send a webhook about error
-			#curl -H "Content-Type: application/json" -d '{"username": "test", "content": "'"An error was encountered when trying to update ${fulldomain}, the response was:\n${response}"'"}' $webhook
-			#/usr/local/emhttp/webGui/scripts/notify -e "DDNS Namecheap" -s "DNS Update Error ${fulldomain}" -i "warning" -m "An error was encountered when trying to update ${fulldomain}, the response was:\n${response}" -t
+			curl -H "Content-Type: application/json" -d '{"content": "An error was encountered when trying to update '$fulldomain'\n```'"$response"'```"}' $webhook
 			# Log to console
 			echo -e "An error was encountered when trying to update ${fulldomain}, the response was:\n${response}"
 		fi
