@@ -1,5 +1,5 @@
 #!/bin/bash
-hosts=("@" "host1" "host2" "host3") # Enter your hosts in quotes separated by a space. The first and last characters within the parenthesis need to be spaces.
+hosts=( "@" "host1" "host2" "host3" ) # Enter your hosts in quotes separated by a space. The first and last characters within the parenthesis need to be spaces.
 domain="" # Your domain name
 password="" # The Dynamic DNS password from Namecheap, you'll find it in the control panel for your domain
 webhook="" #discord webhook link
